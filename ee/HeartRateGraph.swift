@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class HeartRateGraph: NSView {
+class HeartRateGraph1: NSView {
     var mGraphMax = 150
     
     var mWindowSize = 640

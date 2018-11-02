@@ -8,29 +8,22 @@
 
 import Cocoa
 
-class RRGraph: NSView {
-    var mGraphMax = 150
+class HeartRateGraph: NSView {
+    var mGraphMax = 6000
     
-    var mWindowSize = 640
-    var updateInterval : Double = 20
+    var updateInterval : Double = 30
     var lineColor: NSColor = NSColor.init(0x3CB878)
     
-    var Plot = [13, 22.5, 30.5, 37, 43, 47, 50, 51.5, 51, 49, 46, 43, 39, 33, 24, 15.5, 12, 10, 8, 6, 4.5, 3.5, 3, 2.5, 2, 1.5, 1, 0.5, 0, 0, 2.5, 7]
+    var Plot = [0, 2, 5, 8, 13, 19, 27, 31, 33, 32, 30, 27, 24, 20, 17, 16, 16.5, 17.5, 18.5, 19, 18, 16, 13, 9, 4, 2, 1, 0.5, 0]
     
     var data = [Point]()
-    var totalPoints = 640
-    var nCurrentPoint:Double = 0
-    var nAddPoint:Double = 1
+    var totalPoints = 203
+    var nCurrentPoint:Int = 0
+
     var nPlotPoint = 0
-    var nDataPoint = 0
-    
     var nSpace = 10
-    var nAmplitude:Double = 50
-    var fillchart = false
-    
-    func setWindowSize(_ size: Int) {
-        mWindowSize = size
-    }
+    var nAmplitude:Double = 100
+    var n:Double = 100
     
     func setColor(lineColor: NSColor) {
         self.lineColor = lineColor
@@ -65,15 +58,18 @@ class RRGraph: NSView {
         for i in 0..<Plot.count{
             Plot[i] = 100 - Plot[i]
         }
+        for i in 0..<totalPoints{
+            data.append(Point(Double(i), -1))
+        }
     }
     
     override func draw(_ rect: CGRect) {
         
         if(drawQueue.count < 2){ return }
-        
+
         let width: Int = Int(bounds.width)
         let height: Int = Int(bounds.height)
-        let mapRatio = Double(width) / Double(mWindowSize)
+        let mapRatio = Double(width) / Double(totalPoints)
         
         // Drawing code
         let aPath = NSBezierPath()
@@ -99,46 +95,27 @@ class RRGraph: NSView {
     }
     
     private func updateData() -> [Point]{
+//        if(data.count < nCurrentPoint + 1){
+//            data.append(Point(Double(nCurrentPoint), Plot[nPlotPoint] * n))
+//        }else{
+        data[nCurrentPoint] = Point(Double(nCurrentPoint), Plot[nPlotPoint] * n)
+//        }
         
-        if (fillchart) {
-            var index = 0
-            while (index < data.count){
-                if (nCurrentPoint <= data[index].x && Double(nCurrentPoint) + nAddPoint >= Double(data[index].x)) {
-                    data.remove(at: index)
-                    index = index - 1
-                }
-                index = index + 1
-            }
-            
-            data.insert(Point(nCurrentPoint, Double(Plot[nPlotPoint])), at:nDataPoint)
-            
-            nDataPoint = nDataPoint + 1
-            
-            for index in 0 ..< data.count {
-                if (nCurrentPoint < data[index].x && nCurrentPoint + 15 >= data[index].x) {
-                    data[index].y = -1
-                }
-            }
-        } else {
-            data.append(Point(nCurrentPoint, Double(Plot[nPlotPoint])))
+        
+        for i in 1..<5 {
+            var nPont = nCurrentPoint + i
+            if (nPont >= totalPoints) {nPont = nPont - totalPoints}
+            data[nPont].y = -1
         }
-        
-        nCurrentPoint = nCurrentPoint + nAddPoint
+       
+        nCurrentPoint = nCurrentPoint + 1
         nPlotPoint = nPlotPoint + 1
         
-        if (nPlotPoint == 32) {
+        if (nPlotPoint == 29) {
             nPlotPoint = 0
-            let n = nAmplitude / Double(10)
-            nAddPoint = 640 / (nAmplitude / 2.5 * 32);
-            updateInterval = Double(200) / Double( n)
-            nSpace = Int(n)
+            n = nAmplitude
         }
-        
-        if (nCurrentPoint >= Double(totalPoints)){
-            nCurrentPoint = 0
-            nDataPoint = 0
-            fillchart = true
-        }
+        if (nCurrentPoint == totalPoints) { nCurrentPoint = 0 }
         print(data.count)
         return data
     }
@@ -147,3 +124,4 @@ class RRGraph: NSView {
         nAmplitude = hr
     }
 }
+
