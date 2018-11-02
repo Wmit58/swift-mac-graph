@@ -707,27 +707,46 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="ee" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="748" height="465"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="oEP-nr-ukN" customClass="Graph" customModule="ee" customModuleProvider="target">
-                                <rect key="frame" x="90" y="132" width="360" height="111"/>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hNB-Eu-T1C">
+                                <rect key="frame" x="68" y="313" width="75" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="OVk-pD-3y3"/>
+                                    <constraint firstAttribute="width" constant="75" id="aNW-Ah-TLp"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="border" alignment="center" title="40" drawsBackground="YES" id="rzX-pN-8QN">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="90H-OR-LUL"/>
+                                    <font key="font" metaFont="system" size="27"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="onEnter:" target="XfG-lQ-9wD" id="TQI-Kh-MDd"/>
+                                </connections>
+                            </textField>
+                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oEP-nr-ukN" customClass="Graph" customModule="ee" customModuleProvider="target">
+                                <rect key="frame" x="165" y="295" width="553" height="143"/>
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="oEP-nr-ukN" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="90" id="142-fQ-gJU"/>
+                            <constraint firstItem="oEP-nr-ukN" firstAttribute="leading" secondItem="hNB-Eu-T1C" secondAttribute="trailing" constant="22" id="89P-l2-Qaa"/>
                             <constraint firstItem="oEP-nr-ukN" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="27" id="Cdw-kQ-Zc1"/>
-                            <constraint firstAttribute="bottom" secondItem="oEP-nr-ukN" secondAttribute="bottom" constant="132" id="Rr2-uR-5kU"/>
+                            <constraint firstItem="hNB-Eu-T1C" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="115" id="Q5b-Ch-pX7"/>
+                            <constraint firstAttribute="bottom" secondItem="oEP-nr-ukN" secondAttribute="bottom" constant="163" id="Rr2-uR-5kU"/>
                             <constraint firstAttribute="trailing" secondItem="oEP-nr-ukN" secondAttribute="trailing" constant="30" id="dK2-Oh-Dd9"/>
+                            <constraint firstItem="hNB-Eu-T1C" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="68" id="yuK-SG-zlA"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="graphOutlet" destination="oEP-nr-ukN" id="80k-X3-ch4"/>
+                        <outlet property="tvHrOutlet" destination="hNB-Eu-T1C" id="bWZ-rR-PY7"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2" y="610"/>
+            <point key="canvasLocation" x="-61" y="707.5"/>
         </scene>
     </scenes>
 </document>
