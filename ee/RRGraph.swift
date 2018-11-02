@@ -8,22 +8,27 @@
 
 import Cocoa
 
-class Graph: NSView {
-    //    func debug(){
-    //        if holeRect.count > 0{
-    //            var str = ""
-    //            for i in 0 ..< holeRect.count{
-    //                str = "\(str)\(holeRect[i]),"
-    //            }
-    //            str = "\(str)\(holeRect.first!), \(holeRect.last!)"
-    //            print(str)
-    //        }
-    //    }
+class RRGraph: NSView {
     var mGraphMax = 150
     
     var mWindowSize = 640
-    var updateInterval:Double = 30
+    var updateInterval : Double = 30
     var lineColor: NSColor = NSColor.init(0x3CB878)
+    
+    var Plot = [0, 0, 7, 0, 0, 0, -10, 30, 70, -20, 0, 0, 0, 0, 0, 10, 15, 17, 15, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    ]
+    
+    var data = [Point]()
+    var totalPoints = 640
+    var nCurrentPoint:Double = 0
+    var nAddPoint = 2.857
+    var nPlotPoint = 0
+    var nDataPoint = 0
+    var nPlotSize = 32
+    var nSpace = 10
+    var nAmplitude:Double = 70
+    var fillchart = false
     
     func setWindowSize(_ size: Int) {
         mWindowSize = size
@@ -33,7 +38,7 @@ class Graph: NSView {
         self.lineColor = lineColor
     }
     
-    var drawQueue = [Twice]()
+    var drawQueue = [Point]()
     
     func simulate() {
         drawQueue = updateData()
@@ -47,7 +52,6 @@ class Graph: NSView {
     var timer: Timer = Timer()
     
     func startDraw() {
-        //        timer = Timer.scheduledTimer(withTimeInterval: 0.002, repeats: true, block: { _ in
         timer = Timer.scheduledTimer(withTimeInterval: updateInterval / 1000, repeats: true, block: { _ in
             self.simulate()
         })
@@ -67,6 +71,7 @@ class Graph: NSView {
     
     override func draw(_ rect: CGRect) {
         
+        if(drawQueue.count < 2){ return }
         
         let width: Int = Int(bounds.width)
         let height: Int = Int(bounds.height)
@@ -76,43 +81,26 @@ class Graph: NSView {
         let aPath = NSBezierPath()
         aPath.lineWidth = 2
         
-        if(drawQueue.count < 2){return}
-        
         for i in 0 ..< drawQueue.count-1 {
-            if drawQueue[i].y != -1 && drawQueue[i+1].y != -1 {
-                let fromX = Int(Double(drawQueue[i].x) * mapRatio)
-                let toX   = Int(Double(drawQueue[i+1].x) * mapRatio)
-                
-                let fromY =  -50 + height - Int(drawQueue[i].y * Double(height) / Double(mGraphMax))
-                let toY   =  -50 + height - Int(drawQueue[i+1].y * Double(height) / Double(mGraphMax))
-                
-                aPath.move(to: CGPoint(x: fromX, y: fromY))
-                aPath.line(to: CGPoint(x: toX  , y: toY))
+            if drawQueue[i].y == -1 || drawQueue[i+1].y == -1 {
+                continue
             }
+            let fromX = Int(Double(drawQueue[i].x) * mapRatio)
+            let toX   = Int(Double(drawQueue[i+1].x) * mapRatio)
+            
+            let fromY =  -50 + height - Int(drawQueue[i].y * Double(height) / Double(mGraphMax))
+            let toY   =  -50 + height - Int(drawQueue[i+1].y * Double(height) / Double(mGraphMax))
+            
+            aPath.move(to: CGPoint(x: fromX, y: fromY))
+            aPath.line(to: CGPoint(x: toX  , y: toY))
+            
         }
         
         lineColor.set()
         aPath.stroke()
     }
     
-    var holeRect = [Int]()
-    //    var prev = 0
-    var Plot = [0, 0, 7, 0, 0, 0, -10, 30, 70, -20, 0, 0, 0, 0, 0, 10, 15, 17, 15, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-    ]
-    var data = [Twice]()
-    var totalPoints = 640
-    var nCurrentPoint:Double = 0
-    var nAddPoint = 2.857
-    var nPlotPoint = 0
-    var nDataPoint = 0
-    var nPlotSize = 32
-    var nSpace = 10
-    var nAmplitude:Double = 70
-    var fillchart = false
-    
-    
-    func updateData() -> [Twice]{
+    private func updateData() -> [Point]{
         
         if (fillchart) {
             var index = 0
@@ -124,18 +112,17 @@ class Graph: NSView {
                 index = index + 1
             }
             
-            data.insert(Twice(nCurrentPoint, Double(Plot[nPlotPoint])), at:nDataPoint)
+            data.insert(Point(nCurrentPoint, Double(Plot[nPlotPoint])), at:nDataPoint)
             
             nDataPoint = nDataPoint + 1
-            holeRect.removeAll()
+            
             for index in 0 ..< data.count {
                 if (nCurrentPoint < data[index].x && nCurrentPoint + 15 >= data[index].x) {
                     data[index].y = -1
-                    holeRect.append(index)
                 }
             }
         } else {
-            data.append(Twice(nCurrentPoint, Double(Plot[nPlotPoint])))
+            data.append(Point(nCurrentPoint, Double(Plot[nPlotPoint])))
         }
         
         nCurrentPoint = nCurrentPoint + nAddPoint
@@ -188,18 +175,3 @@ class Graph: NSView {
         } while (false);
     }
 }
-
-class Twice{
-    var x : Double = 0
-    var y : Double = 0
-    init(_ x:Double,_ y: Double){
-        self.x = x
-        self.y = y
-    }
-}
-
-
-
-
-
-

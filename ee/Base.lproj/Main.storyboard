@@ -726,7 +726,7 @@
                                     <action selector="onEnter:" target="XfG-lQ-9wD" id="TQI-Kh-MDd"/>
                                 </connections>
                             </textField>
-                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oEP-nr-ukN" customClass="Graph" customModule="ee" customModuleProvider="target">
+                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oEP-nr-ukN" customClass="HeartRateGraph" customModule="ee" customModuleProvider="target">
                                 <rect key="frame" x="165" y="295" width="553" height="143"/>
                             </customView>
                         </subviews>

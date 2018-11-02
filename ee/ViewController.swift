@@ -10,7 +10,7 @@ import Cocoa
 
 class ViewController: NSViewController {
     
-    @IBOutlet weak var graphOutlet: Graph!
+    @IBOutlet weak var graphOutlet: HeartRateGraph!
     
     @IBOutlet weak var tvHrOutlet: NSTextField!
     

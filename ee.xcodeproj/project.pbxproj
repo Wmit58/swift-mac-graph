@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		8407761C218C532500A99F96 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407761B218C532500A99F96 /* Color.swift */; };
-		8407761E218C546000A99F96 /* ee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407761D218C546000A99F96 /* ee.swift */; };
+		8407761E218C546000A99F96 /* RRGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407761D218C546000A99F96 /* RRGraph.swift */; };
 		84702AA9218B718B00A8A80C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84702AA8218B718B00A8A80C /* AppDelegate.swift */; };
 		84702AAB218B718B00A8A80C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84702AAA218B718B00A8A80C /* ViewController.swift */; };
 		84702AAD218B718E00A8A80C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84702AAC218B718E00A8A80C /* Assets.xcassets */; };
 		84702AB0218B718E00A8A80C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84702AAE218B718E00A8A80C /* Main.storyboard */; };
-		84702AD7218B766C00A8A80C /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84702AD6218B766C00A8A80C /* Graph.swift */; };
+		84702AD7218B766C00A8A80C /* HeartRateGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84702AD6218B766C00A8A80C /* HeartRateGraph.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8407761B218C532500A99F96 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		8407761D218C546000A99F96 /* ee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ee.swift; sourceTree = "<group>"; };
+		8407761D218C546000A99F96 /* RRGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RRGraph.swift; sourceTree = "<group>"; };
 		84702AA5218B718B00A8A80C /* ee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84702AA8218B718B00A8A80C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84702AAA218B718B00A8A80C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,7 +26,7 @@
 		84702AAF218B718E00A8A80C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		84702AB1218B718E00A8A80C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84702AB2218B718E00A8A80C /* ee.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ee.entitlements; sourceTree = "<group>"; };
-		84702AD6218B766C00A8A80C /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		84702AD6218B766C00A8A80C /* HeartRateGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateGraph.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +65,8 @@
 				84702AAE218B718E00A8A80C /* Main.storyboard */,
 				84702AB1218B718E00A8A80C /* Info.plist */,
 				84702AB2218B718E00A8A80C /* ee.entitlements */,
-				84702AD6218B766C00A8A80C /* Graph.swift */,
-				8407761D218C546000A99F96 /* ee.swift */,
+				84702AD6218B766C00A8A80C /* HeartRateGraph.swift */,
+				8407761D218C546000A99F96 /* RRGraph.swift */,
 				8407761B218C532500A99F96 /* Color.swift */,
 			);
 			path = ee;
@@ -142,9 +142,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84702AD7218B766C00A8A80C /* Graph.swift in Sources */,
+				84702AD7218B766C00A8A80C /* HeartRateGraph.swift in Sources */,
 				8407761C218C532500A99F96 /* Color.swift in Sources */,
-				8407761E218C546000A99F96 /* ee.swift in Sources */,
+				8407761E218C546000A99F96 /* RRGraph.swift in Sources */,
 				84702AAB218B718B00A8A80C /* ViewController.swift in Sources */,
 				84702AA9218B718B00A8A80C /* AppDelegate.swift in Sources */,
 			);
