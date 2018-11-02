@@ -72,34 +72,27 @@ class Graph: NSView {
         let height: Int = Int(bounds.height)
         let mapRatio = Double(width) / Double(mWindowSize)
         
-        var start = drawQueue[0]
         // Drawing code
         let aPath = NSBezierPath()
         aPath.lineWidth = 2
         
-        aPath.move(to: CGPoint(x: Int(Double(start.x!) * mapRatio), y: -50 + height - Int(start.y! * Double(height) / Double(mGraphMax))))
         if(drawQueue.count < 2){return}
         
-        
-        for i in 1 ..< drawQueue.count-1 {
-            if start.y != nil && drawQueue[i+1].y != nil{
-                //                    aPath.move(to: CGPoint(x: Int(Double(start.x!) * mapRatio), y: -50 + height - Int(start.y! * Double(height) / Double(mGraphMax))))
-                aPath.line(to: CGPoint(x: Int((Double(drawQueue[i + 1].x!)) * mapRatio), y: -50 +  height - Int(drawQueue[i+1].y! * Double(height) / Double(mGraphMax))))
+        for i in 0 ..< drawQueue.count-1 {
+            if drawQueue[i].y != -1 && drawQueue[i+1].y != -1 {
+                let fromX = Int(Double(drawQueue[i].x) * mapRatio)
+                let toX   = Int(Double(drawQueue[i+1].x) * mapRatio)
+                
+                let fromY =  -50 + height - Int(drawQueue[i].y * Double(height) / Double(mGraphMax))
+                let toY   =  -50 + height - Int(drawQueue[i+1].y * Double(height) / Double(mGraphMax))
+                
+                aPath.move(to: CGPoint(x: fromX, y: fromY))
+                aPath.line(to: CGPoint(x: toX  , y: toY))
             }
-            
-            start = drawQueue[i]
         }
         
         lineColor.set()
         aPath.stroke()
-  
-        if holeRect.count > 0{
-            let drect = CGRect(x: Int(Double(holeRect.first!) * mapRatio ) * totalPoints / drawQueue.count, y: 0, width: Int(Double(holeRect.last! - holeRect.first!) * mapRatio), height: height)
-            let bpath: NSBezierPath = NSBezierPath(rect: drect)
-            NSColor(0xFFFFFF).set()
-            bpath.fill()
-//            bpath.stroke()
-        }
     }
     
     var holeRect = [Int]()
@@ -124,8 +117,7 @@ class Graph: NSView {
         if (fillchart) {
             var index = 0
             while (index < data.count){
-                if (nCurrentPoint <= data[index].x! && Double(nCurrentPoint) + nAddPoint >= Double(data[index].x!)) {
-                    //    data.splice(index, 1)
+                if (nCurrentPoint <= data[index].x && Double(nCurrentPoint) + nAddPoint >= Double(data[index].x)) {
                     data.remove(at: index)
                     index = index - 1
                 }
@@ -137,8 +129,8 @@ class Graph: NSView {
             nDataPoint = nDataPoint + 1
             holeRect.removeAll()
             for index in 0 ..< data.count {
-                if (nCurrentPoint < data[index].x! && nCurrentPoint + 15 >= data[index].x!) {
-//                    data[index].y = nil
+                if (nCurrentPoint < data[index].x && nCurrentPoint + 15 >= data[index].x) {
+                    data[index].y = -1
                     holeRect.append(index)
                 }
             }
@@ -151,7 +143,7 @@ class Graph: NSView {
         
         if (nPlotPoint >= nPlotSize) {
             nPlotPoint = 0
-            let n = nAmplitude / 10
+            let n = nAmplitude / Double(10)
             nAddPoint = Double(640) / (Double(n) * Double(nPlotSize))
             updateInterval = Double(200) / Double( n)
             nSpace = Int(n)
@@ -162,7 +154,7 @@ class Graph: NSView {
             nDataPoint = 0
             fillchart = true
         }
-        //        print(data.count, Plot.count)
+        print(data.count)
         return data
     }
     
@@ -198,8 +190,8 @@ class Graph: NSView {
 }
 
 class Twice{
-    var x : Double?
-    var y : Double?
+    var x : Double = 0
+    var y : Double = 0
     init(_ x:Double,_ y: Double){
         self.x = x
         self.y = y
